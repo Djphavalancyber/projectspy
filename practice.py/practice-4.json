@@ -1,0 +1,83 @@
+{
+  "description": "This JSON file contains a series of web scraping examples using various libraries in Python. Each example demonstrates how to scrape data from different types of websites, including commercial ones that use obfuscated class names.",
+  "examples": [
+    {
+      "title": "Scraping a Simple Website",
+      "library": "requests-html",
+      "description": "This example shows how to use the `requests-html` library to scrape a simple website. The `requests-html` library is built on top of the `requests` and `pyppeteer` libraries, making it easy to interact with web pages that require JavaScript execution.",
+      "steps": [
+        {
+          "step": 1,
+          "description": "Import the necessary modules."
+        },
+        {
+          "step": 2,
+          "description": "Make a request to the target website using the `HTMLSession` class from `requests-html`. This allows us to execute JavaScript on the page."
+        },
+        {
+          "step": 3,
+          "description": "Parse the HTML content of the page using the `html` attribute of the session object. This provides access to a variety of methods and attributes for interacting with the DOM."
+        },
+        {
+          "step": 4,
+          "description": "Extract the desired data from the parsed HTML using CSS selectors or XPath expressions."
+        }
+      ]
+    },
+    {
+      "title": "Scraping a Commercial Website",
+      "library": "selenium",
+      "description": "This example demonstrates how to use the `selenium` library to scrape data from a commercial website that uses obfuscated class names. The `selenium` library provides a comprehensive API for automating web browsers and interacting with web pages.",
+      "steps": [
+        {
+          "step": 1,
+          "description": "Import the necessary modules."
+        },
+        {
+          "step": 2,
+          "description": "Initialize a new instance of the desired web browser (e.g., Chrome, Firefox) using the `webdriver` module from `selenium`. This provides access to a variety of methods and attributes for controlling the browser."
+        },
+        {
+          "step": 3,
+          "description": "Navigate to the target website using the `get` method of the driver object. This loads the page and executes any JavaScript required to render it."
+        },
+        {
+          "step": 4,
+          "description": "Interact with the web page using various methods provided by the `selenium` library, such as finding elements by CSS selector or XPath expression, clicking buttons, filling out forms, etc."
+        },
+        {
+          "step": 5,
+          "description": "Extract the desired data from the web page using methods provided by the `selenium` library, such as getting the text content of an element, taking a screenshot, etc."
+        },
+        {
+          "step": 6,
+          "description": "Close the browser and terminate the driver object."
+        }
+      ]
+    },
+    {
+      "title": "Scraping with Different Referring Folks",
+      "library": "requests",
+      "description": "This example demonstrates how to use the `requests` library to scrape data from a website while rotating referring folks. This can be useful for avoiding detection by websites that block requests based on IP address or user agent string.",
+      "steps": [
+        {
+          "step": 1,
+          "description": "Import the necessary modules."
+        },
+        {
+          "step": 2,
+          "description": "Create a list of referring URLs."
+        },
+        {
+          "step": 3,
+          "description": "Make a request to the target website using the `get` method from `requests`. Set the `headers` parameter to include a randomly selected referring URL."
+        },
+        {
+          "step": 4,
+          "description": "Extract the desired data from the response content."
+        }
+      ]
+    }
+  ],
+  "conclusion": "In this JSON file, we have covered three different web scraping examples using various libraries in Python. Each example demonstrates how to scrape data from different types of websites, including commercial ones that use obfuscated class names. By understanding these examples, you can create your own web scraper by applying a 20% principle and using your creativity based on the problem."
+}

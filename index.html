@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<!-- DOCTYPE tells browser: this is HTML5 -->
+
+<html lang="en">
+<!-- lang="en" tells browser the language — good for SEO and accessibility -->
+
+<head>
+  <!-- HEAD: nothing here is visible. It's config for the browser -->
+
+  <meta charset="UTF-8">
+  <!-- UTF-8: supports all characters including ₹ symbols, emojis, Hindi etc -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- viewport: makes it responsive on mobile. Without this, mobile zooms out. -->
+
+  <meta name="description" content="DJ — Hyperrealistic Graphite Portrait Artist. Commission a portrait.">
+  <!-- description: what Google shows under your link in search results -->
+
+  <title>DJ | Hyperrealistic Art Commissions</title>
+  <!-- title: what appears on the browser tab -->
+
+  <style>
+    /* ============================================================
+       CSS LIVES HERE (or in a separate .css file linked below)
+       Everything inside style tags is CSS.
+       Syntax: selector { property: value; }
+    ============================================================ */
+
+    /* ── RESET & ROOT VARIABLES ───────────────────────────────── */
+
+    * {
+      /* * = selects EVERY element on the page */
+      margin: 0;              /* removes default spacing outside elements */
+      padding: 0;             /* removes default spacing inside elements */
+      box-sizing: border-box; /* padding/border included in width — always use this */
+    }
+
+    :root {
+      /* :root = the <html> element. Use it to store reusable variables */
+      --bg: #0d0d0d;           /* CSS variable. Use it anywhere with var(--bg) */
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --gold: #e8b84b;
+      --white: #ffffff;
+      --gray: #aaaaaa;
+      --dark-gray: #555555;
+
+      --font-main: 'Segoe UI', Arial, sans-serif;
+      /* font stack: tries Segoe UI first, falls back to Arial, then any sans-serif */
+
+      --transition: all 0.3s ease;
+      /* reusable transition for hover effects */
+    }
+
+    /* ── TYPOGRAPHY & BASE ────────────────────────────────────── */
+
+    body {
+      /* body = the entire visible page */
+      background-color: var(--bg);   /* uses the variable we defined in :root */
+      color: var(--white);
+      font-family: var(--font-main);
+      font-size: 16px;               /* base font size. rem units will scale from this */
+      line-height: 1.6;              /* spacing between lines of text */
+    }
+
+    h1 { font-size: 3rem; }    /* rem = relative to root font size. 3rem = 48px */
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.25rem; }
+
+    p {
+      color: var(--gray);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    a {
+      /* anchor tags (links) */
+      color: var(--gold);
+      text-decoration: none;   /* removes the underline */
+      transition: var(--transition);
+    }
+
+    a:hover {
+      /* :hover = when mouse is over the element */
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    /* ── LAYOUT UTILITIES ─────────────────────────────────────── */
+
+    .container {
+      /* a centered wrapper — used on every section */
+      max-width: 1100px;     /* won't stretch wider than this on big screens */
+      margin: 0 auto;        /* auto left+right margin = centers horizontally */
+      padding: 0 24px;       /* breathing room on small screens */
+    }
+
+    .section {
+      padding: 80px 0;       /* top and bottom breathing room between sections */
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 60px;
+    }
+
+    .gold { color: var(--gold); }          /* utility class */
+    .text-center { text-align: center; }   /* utility class */
+
+    /* ── FLEXBOX ──────────────────────────────────────────────── */
+    /*
+      Flexbox: one-dimensional layout (row OR column)
+      display: flex         → activates flexbox on container
+      flex-direction        → row (default) or column
+      justify-content       → alignment on MAIN axis (left-right if row)
+      align-items           → alignment on CROSS axis (up-down if row)
+      gap                   → space between children
+      flex-wrap             → allows children to wrap to next line
+    */
+
+    .flex {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ── CSS GRID ─────────────────────────────────────────────── */
+    /*
+      Grid: two-dimensional layout (rows AND columns)
+      display: grid
+      grid-template-columns → defines columns
+      grid-template-rows    → defines rows (usually auto)
+      gap                   → space between cells
+      repeat(3, 1fr)        → 3 equal columns. fr = fraction of available space
+    */
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    /* ── NAVBAR ───────────────────────────────────────────────── */
+
+    nav {
+      position: fixed;       /* stays at top when you scroll */
+      top: 0;
+      left: 0;
+      right: 0;              /* stretches full width */
+      z-index: 100;          /* sits above everything else. Higher = on top */
+      background-color: rgba(13, 13, 13, 0.9);
+      /* rgba: red green blue alpha(opacity 0-1) */
+      backdrop-filter: blur(10px);  /* frosted glass effect */
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;   /* space between letters */
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;      /* removes bullet points from <ul> */
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      font-size: 0.9rem;
+      text-transform: uppercase;   /* forces ALL CAPS in CSS without changing HTML */
+      letter-spacing: 1px;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    /* ── HERO SECTION ─────────────────────────────────────────── */
+
+    .hero {
+      min-height: 100vh;     /* vh = viewport height. 100vh = full screen height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 80px;     /* offset for fixed navbar */
+      position: relative;
+      overflow: hidden;      /* hides anything that goes outside this box */
+    }
+
+    .hero::before {
+      /* ::before = inserts a fake element BEFORE the content */
+      /* Used for decorative elements without adding HTML */
+      content: '';           /* required — without this ::before won't show */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* translate(-50%, -50%) centers the element on its own center point */
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(232, 184, 75, 0.08), transparent 70%);
+      /* radial-gradient: circular gradient from gold to transparent */
+      pointer-events: none;  /* clicks pass through this element */
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background-color: rgba(232, 184, 75, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(232, 184, 75, 0.3);
+      padding: 6px 16px;
+      border-radius: 100px;  /* pill shape */
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      /* clamp(min, preferred, max) — responsive font that scales with screen */
+      /* vw = viewport width. 6vw = 6% of screen width */
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ── BUTTONS ──────────────────────────────────────────────── */
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;       /* shows hand cursor on hover */
+      transition: var(--transition);
+      border: none;          /* removes default button border */
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--gold);
+      color: #0d0d0d;        /* dark text on gold = readable */
+    }
+
+    .btn-primary:hover {
+      background-color: #f0c85a;   /* slightly lighter gold on hover */
+      color: #0d0d0d;
+      text-decoration: none;
+      transform: translateY(-2px);  /* moves up 2px on hover — subtle lift */
+      box-shadow: 0 8px 24px rgba(232, 184, 75, 0.3);
+      /* box-shadow: x-offset y-offset blur spread color */
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+
+    /* ── CARDS ────────────────────────────────────────────────── */
+
+    .card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+
+    /* ── PRICING ──────────────────────────────────────────────── */
+
+    .pricing-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      /* .featured = second class. Only applies to elements with BOTH classes */
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #1a1a1a, #1f1a0f);
+      /* linear-gradient: angle, color1, color2 */
+    }
+
+    .pricing-card.featured::before {
+      content: 'POPULAR';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      /* translateX(-50%) centers horizontally without knowing width */
+      background-color: var(--gold);
+      color: #0d0d0d;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 16px;
+      border-radius: 0 0 8px 8px;
+      /* border-radius: top-left top-right bottom-right bottom-left */
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 16px 0;
+    }
+
+    .price span {
+      font-size: 1rem;
+      color: var(--gray);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 24px 0;
+      text-align: left;
+    }
+
+    .pricing-features li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .pricing-features li::before {
+      content: '✓ ';
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ── PROCESS STEPS ────────────────────────────────────────── */
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;          /* prevents shrinking in flex */
+      background-color: var(--gold);
+      color: #0d0d0d;
+      border-radius: 50%;       /* perfect circle */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .step-content h3 {
+      margin-bottom: 4px;
+    }
+
+    /* ── GALLERY ──────────────────────────────────────────────── */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      /* aspect-ratio: keeps width:height ratio. 1/1 = square */
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
+      /* scale: zoom. 1.02 = 2% bigger. Use small values for subtlety */
+      border-color: var(--gold);
+    }
+
+    .gallery-item img {
+      width: 100%;            /* fills parent width */
+      height: 100%;           /* fills parent height */
+      object-fit: cover;      /* crops image to fill without distorting */
+      display: block;         /* removes bottom gap that inline images have */
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--dark-gray);
+      font-size: 0.8rem;
+    }
+
+    /* ── CONTACT FORM ─────────────────────────────────────────── */
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;          /* label takes full width, input goes below */
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      transition: var(--transition);
+      outline: none;           /* removes default blue outline */
+    }
+
+    input:focus, textarea:focus, select:focus {
+      /* :focus = when element is clicked / selected */
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(232, 184, 75, 0.15);
+    }
+
+    textarea {
+      resize: vertical;        /* user can resize vertically only, not horizontally */
+      min-height: 120px;
+    }
+
+    select option {
+      background-color: var(--surface);
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--dark-gray);
+    }
+
+    /* ── DIVIDER ──────────────────────────────────────────────── */
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background-color: var(--gold);
+      margin: 16px auto 0;
+    }
+
+    /* ── RESPONSIVE (MEDIA QUERIES) ───────────────────────────── */
+    /*
+      @media: applies styles only when condition is true
+      max-width: 768px = applies when screen is 768px or narrower (mobile)
+      min-width: applies when screen is AT LEAST that wide
+    */
+
+    @media (max-width: 768px) {
+      .grid-3 {
+        grid-template-columns: 1fr;
+        /* on mobile: single column instead of 3 */
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+        /* hide nav links on mobile — in real project you'd build a hamburger menu */
+      }
+
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.6rem; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav>
+    <div class="container flex-between">
+      <div class="nav-logo">DJ</div>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#contact">Commission</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="hero-tag">Hyperrealistic Graphite Portraits</div>
+    <h1>Pencil meets <span class="gold">precision.</span></h1>
+    <p>
+      Commission a hand-drawn portrait that captures more than likeness —
+      it captures presence. Based in Puducherry, India.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn btn-primary">Commission a Portrait</a>
+      <a href="#work" class="btn btn-outline">View My Work</a>
+    </div>
+  </section>
+
+  <!-- ── WORK / GALLERY ───────────────────────────────────────── -->
+  <section class="section" id="work">
+    <div class="container">
+      <h2 class="section-title">Recent <span class="gold">Work</span></h2>
+      <p class="section-subtitle">Each portrait is drawn by hand using graphite on cartridge paper.</p>
+
+      <div class="gallery-grid">
+        <!-- Replace gallery-placeholder divs with <img> tags when you have images -->
+        <!-- <img src="your-image.jpg" alt="Portrait description"> -->
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span style="font-size: 2rem;">🎨</span>
+            <span>Ranveer Singh · Don 3</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span style="font-size: 2rem;">✏️</span>
+            <span>Virat Kohli Portrait</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span style="font-size: 2rem;">🖊️</span>
+            <span>Commission Portrait</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span style="font-size: 2rem;">📐</span>
+            <span>Portrait Study</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span style="font-size: 2rem;">🖋️</span>
+            <span>Character Study</span>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span style="font-size: 2rem;">✍️</span>
+            <span>Commission Work</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ───────────────────────────────────────────────── -->
+  <section class="section" id="pricing" style="background-color: #111111;">
+    <!-- inline style: CSS written directly on element. Use sparingly. -->
+    <div class="container">
+      <h2 class="section-title">Commission <span class="gold">Pricing</span></h2>
+      <p class="section-subtitle">All portraits are drawn by hand. No digital shortcuts.</p>
+
+      <div class="grid-3">
+
+        <div class="pricing-card">
+          <h3>Sketch</h3>
+          <div class="price">₹800 <span>/ portrait</span></div>
+          <ul class="pricing-features">
+            <li>Single subject</li>
+            <li>A4 size paper</li>
+            <li>Face only</li>
+            <li>5–7 day delivery</li>
+            <li>1 revision</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline" style="width:100%; text-align:center;">Get Started</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <h3>Portrait</h3>
+          <div class="price">₹1,500 <span>/ portrait</span></div>
+          <ul class="pricing-features">
+            <li>Single subject</li>
+            <li>A3 size paper</li>
+            <li>Head + shoulders</li>
+            <li>7–10 day delivery</li>
+            <li>2 revisions</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary" style="width:100%; text-align:center;">Commission Now</a>
+        </div>
+
+        <div class="pricing-card">
+          <h3>Full Detail</h3>
+          <div class="price">₹3,000 <span>/ portrait</span></div>
+          <ul class="pricing-features">
+            <li>1–2 subjects</li>
+            <li>A3 size paper</li>
+            <li>Full upper body</li>
+            <li>12–15 day delivery</li>
+            <li>3 revisions</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline" style="width:100%; text-align:center;">Get Started</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROCESS ───────────────────────────────────────────────── -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="grid-2">
+
+        <div>
+          <h2>How it <span class="gold">works</span></h2>
+          <div class="divider" style="margin: 16px 0 32px 0;"></div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h3>Send your reference</h3>
+                <p>Share a clear, high-resolution photo via Instagram DM or WhatsApp. Better photo = better portrait.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h3>Confirm & pay 50%</h3>
+                <p>We confirm details — size, style, deadline. Pay 50% upfront via UPI to begin.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h3>I draw, you wait</h3>
+                <p>Progress updates shared at key stages. You see it coming to life.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h3>Deliver & final payment</h3>
+                <p>High-res scan delivered digitally. Physical delivery available in Puducherry. Pay remaining 50%.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="text-align:center; padding: 60px 40px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">✏️</div>
+            <h3 style="color: var(--gold); margin-bottom: 12px;">Every stroke by hand</h3>
+            <p>No digital filters. No tracing. Pure graphite on cartridge paper — the way it has always been done.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY ME ─────────────────────────────────────────────────── -->
+  <section class="section" style="background-color: #111111;">
+    <div class="container">
+      <h2 class="section-title text-center">Why commission <span class="gold">me?</span></h2>
+      <div class="divider" style="margin-bottom: 60px;"></div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🏆</div>
+          <h3>Proven skill</h3>
+          <p>Commission-level portraits since my teens. Paid commissions before I owned a PC.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Fast turnaround</h3>
+          <p>Most portraits completed within 7–10 days. Rush orders available — ask first.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>Progress updates</h3>
+          <p>You'll see your portrait at every major stage. No surprises on delivery day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT FORM ───────────────────────────────────────────── -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Start your <span class="gold">commission</span></h2>
+      <p class="section-subtitle">Fill this out and I'll respond within 24 hours.</p>
+
+      <div style="max-width: 600px; margin: 0 auto;">
+
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Arjun Sharma">
+          <!-- id="name" links input to its label via for="name" -->
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email / WhatsApp</label>
+          <input type="email" id="email" placeholder="you@email.com or +91 XXXXXXXXXX">
+        </div>
+
+        <div class="form-group">
+          <label for="package">Package</label>
+          <select id="package">
+            <option value="">Select a package</option>
+            <option value="sketch">Sketch — ₹800</option>
+            <option value="portrait">Portrait — ₹1,500</option>
+            <option value="full">Full Detail — ₹3,000</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="details">Tell me about your portrait</label>
+          <textarea id="details" placeholder="Who is the subject? Any specific pose or expression? Do you want physical or digital delivery?"></textarea>
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; font-size: 1rem;">
+          Send Commission Request
+        </button>
+
+        <p style="text-align: center; margin-top: 16px; font-size: 0.85rem;">
+          Or DM directly on
+          <a href="#">Instagram @your_handle</a>
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p style="font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 8px;">DJ</p>
+      <p>Hyperrealistic Graphite Artist · Puducherry, India</p>
+      <p style="margin-top: 24px;">© 2026 DJ. All portraits are original hand-drawn works.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

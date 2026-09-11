@@ -1,0 +1,304 @@
+{
+  meta: {
+    lastTouchedVersion: '2026.3.13',
+    lastTouchedAt: '2026-03-21T17:38:16.674Z',
+  },
+  wizard: {
+    lastRunAt: '2026-03-15T14:16:07.569Z',
+    lastRunVersion: '2026.3.8',
+    lastRunCommand: 'configure',
+    lastRunMode: 'local',
+  },
+  update: {
+    channel: 'stable',
+    auto: {
+      enabled: true,
+    },
+  },
+  models: {
+    mode: 'merge',
+    providers: {
+      'custom-127-0-0-1-11434': {
+        baseUrl: 'http://127.0.0.1:11434',
+        apiKey: '__OPENCLAW_REDACTED__',
+        api: 'ollama',
+        models: [
+          {
+            id: 'qwen2.5:latest',
+            name: 'qwen2.5:latest',
+            api: 'ollama',
+            reasoning: true,
+            input: [
+              'text',
+            ],
+            cost: {
+              input: 0,
+              output: 0,
+              cacheRead: 0,
+              cacheWrite: 0,
+            },
+            contextWindow: 320000000,
+            maxTokens: 320000000,
+          },
+          {
+            id: 'qwen2.5-coder:7b',
+            name: 'qwen2.5-coder:7b',
+            api: 'ollama',
+            reasoning: false,
+            input: [
+              'text',
+            ],
+            cost: {
+              input: 0,
+              output: 0,
+              cacheRead: 0,
+              cacheWrite: 0,
+            },
+            contextWindow: 16000000000,
+            maxTokens: 4096,
+          },
+          {
+            id: 'qwen2.5-instruct:7b',
+            name: 'qwen2.5-instruct:7b',
+            api: 'ollama',
+            reasoning: false,
+            input: [
+              'text',
+            ],
+            cost: {
+              input: 0,
+              output: 0,
+              cacheRead: 0,
+              cacheWrite: 0,
+            },
+            contextWindow: 16000000000,
+            maxTokens: 4096,
+          },
+          {
+            id: 'qwen2.5-instruct:14b',
+            name: 'qwen2.5-instruct:14b',
+            api: 'ollama',
+            reasoning: false,
+            input: [
+              'text',
+            ],
+            cost: {
+              input: 0,
+              output: 0,
+              cacheRead: 0,
+              cacheWrite: 0,
+            },
+            contextWindow: 16000000000,
+            maxTokens: 4096,
+          },
+        ],
+      },
+    },
+  },
+  agents: {
+    defaults: {
+      model: {
+        primary: 'custom-127-0-0-1-11434/qwen2.5:latest',
+        fallbacks: [
+          'custom-127-0-0-1-11434/qwen2.5-coder:7b',
+        ],
+      },
+      models: {
+        'custom-127-0-0-1-11434/qwen2.5-coder:7b': {
+          alias: 'qwencoder',
+        },
+        'custom-127-0-0-1-11434/qwen2.5:latest': {
+          alias: 'qwen',
+        },
+         'custom-127-0-0-1-11434/qwen2.5-instruct:7b': {
+          alias: 'qwen',
+        },
+        'custom-127-0-0-1-11434/qwen2.5-instruct:14b': {
+          alias: 'qwen',
+        },
+         'custom-127-0-0-1-11434/qwen2.5-coder:14b': {
+          alias: 'qwen',
+        },
+      },
+      workspace: 'C:\\Users\\admin\\.openclaw\\workspace',
+      memorySearch: {
+        enabled: true,
+      },
+      compaction: {
+        mode: 'default',
+      },
+      maxConcurrent: 4,
+      subagents: {
+        maxConcurrent: 8,
+      },
+    },
+    list: [
+      {
+        id: 'main',
+        name: 'main',
+        workspace: 'C:\\Users\\admin\\.openclaw\\workspace',
+        agentDir: 'C:\\Users\\admin\\.openclaw\\agents\\main\\agent',
+        model: 'ollama/qwen2.5:latest',
+        tools: {
+          profile: 'messaging',
+          alsoAllow: [
+            'read',
+            'write',
+            'edit',
+            'process',
+            'web_search',
+            'web_fetch',
+            'browser',
+            'canvas',
+            'tts',
+          ],
+          deny: [
+            'exec',
+            'apply_patch',
+          ],
+        },
+      },
+    ],
+  },
+  tools: {
+    profile: 'messaging',
+    web: {
+      search: {
+        enabled: true,
+        apiKey: '__OPENCLAW_REDACTED__',
+      },
+      fetch: {
+        enabled: true,
+      },
+    },
+  },
+  bindings: [
+    {
+      agentId: 'main',
+      match: {
+        channel: 'telegram',
+        accountId: 'default',
+      },
+    },
+  ],
+  broadcast: {
+    strategy: 'parallel',
+  },
+  messages: {
+    ackReactionScope: 'group-mentions',
+  },
+  commands: {
+    native: 'auto',
+    nativeSkills: 'auto',
+    restart: true,
+    ownerDisplay: 'raw',
+  },
+  session: {
+    dmScope: 'per-channel-peer',
+  },
+  hooks: {
+    internal: {
+      enabled: true,
+      entries: {
+        'session-memory': {
+          enabled: true,
+        },
+        'command-logger': {
+          enabled: true,
+        },
+      },
+    },
+  },
+  channels: {
+    whatsapp: {
+      enabled: true,
+      capabilities: [
+        '*',
+      ],
+      configWrites: true,
+      sendReadReceipts: true,
+      dmPolicy: 'open',
+      selfChatMode: true,
+      allowFrom: [
+        '*',
+        '+918754931539',
+        '+918111075360',
+        '',
+      ],
+      groupAllowFrom: [
+        '*',
+      ],
+      groupPolicy: 'allowlist',
+      textChunkLimit: 300000000,
+      blockStreaming: false,
+      blockStreamingCoalesce: {
+        maxChars: 200000000,
+      },
+      ackReaction: {
+        direct: true,
+        group: 'always',
+      },
+      debounceMs: 35,
+      heartbeat: {
+        showOk: false,
+      },
+      mediaMaxMb: 50,
+      actions: {
+        reactions: true,
+        sendMessage: true,
+        polls: true,
+      },
+    },
+    telegram: {
+      enabled: true,
+      dmPolicy: 'allowlist',
+      botToken: '__OPENCLAW_REDACTED__',
+      allowFrom: [
+        1809145301,
+      ],
+      groupPolicy: 'allowlist',
+      streaming: 'partial',
+    },
+  },
+  gateway: {
+    port: 18789,
+    mode: 'local',
+    bind: 'auto',
+    auth: {
+      mode: 'token',
+      token: '__OPENCLAW_REDACTED__',
+      allowTailscale: true,
+    },
+    allowRealIpFallback: false,
+    tailscale: {
+      mode: 'off',
+      resetOnExit: false,
+    },
+  },
+  skills: {
+    allowBundled: [
+      '*',
+    ],
+    entries: {
+      'apple-notes': {
+        enabled: false,
+      },
+      'apple-reminders': {
+        enabled: false,
+      },
+      'bear-notes': {
+        enabled: false,
+      },
+      'things-mac': {
+        enabled: false,
+      },
+    },
+  },
+  plugins: {
+    entries: {
+      telegram: {
+        enabled: true,
+      },
+    },
+  },
+}
