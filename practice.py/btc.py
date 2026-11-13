@@ -13,7 +13,7 @@ class TickerResponse(BaseModel):
 
 def fetch_tickers() -> TickerResponse:
     headers = {
-        "api_key": "wuNdvHI62wKfIqdGa1pL5O8yRdxkWW",
+        "api_key": "",
         "api_secret": "56PJZsVDkCF4q9SgtEwycfZrD7H1ODtt12k5UT1ObgFqP1szF1Phf32EqrRL",
         "content_type": "application/json",
     }
